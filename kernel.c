@@ -54,7 +54,6 @@ If i = 0 && i = 0x8
 	Do nothing
 
 (Make sure the array index does not go below zero). 
-To erase the character
-from the screen, print out a space and a second backspace.
-
+!!To erase the character from the screen, print out a space and a second backspace.
+I don't know how exactly to do the above other than literally trying it so thats what I'll do
 */
