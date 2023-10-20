@@ -6,29 +6,30 @@ void printString(char*);
 
 void main()
 {
-	int startVidMem = 0xb800;
-	int vidMemOffset = 0x0;
-	int white = 0x7;
 	char* letters = "Hello World\0";
 
-	while (*letters != 0x0) {
-		putInMemory(startVidMem, vidMemOffset, *letters);
-		++vidMemOffset;
-		putInMemory(startVidMem, vidMemOffset, white);
-		++vidMemOffset;
-		//advance letters pointer
-		++letters;
-	}
-
-	printString('Q');
+	printString(letters);
 
 	while(1);
 }
 
 void printString(char* chars)
-{	
-	char al = 'Q';
+{	int startVidMem = 0xb800;
+	int vidMemOffset = 0x0;
+	int white = 0x7;
+
+	while (*chars != 0x0) {
+		putInMemory(startVidMem, vidMemOffset, *chars);
+		++vidMemOffset;
+		putInMemory(startVidMem, vidMemOffset, white);
+		++vidMemOffset;
+		//advance letters pointer
+		++chars;
+	}
+	/*
+	char al = *chars;
 	char ah = 0xe;
 	int ax = ah * 256 + al;
 	interrupt(0x10, ax, 0, 0, 0);
+	*/
 }
