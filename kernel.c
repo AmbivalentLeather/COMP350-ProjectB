@@ -1,9 +1,9 @@
-
-// Joe's Operating System Kernel
-// kernel.c
+/* Written by: Nick Young, Chase Simao
+ * Date: October 2023 */
 
 void printString(char*);
 void printChar(char*);
+void readString(char);
 
 void main()
 {
@@ -36,3 +36,25 @@ void printChar(char* c)
 	interrupt(0x10, ax, 0, 0, 0);
 
 }
+
+/*
+For every element in a given array
+	Call interrupt 0x16
+	Save result in array
+	Exit loop if ENTER key is pressed (ASCII 0xd)
+Add 0xa (line feed) and 0x0 (end of string) as the last two characters in the array
+Print 0xd and 0xa characters (since the user pressed enter)
+Return the array
+
+If i = 0x8 (backspace), 
+	Print to screen w/o storing in array
+	Decrease the array index
+
+If i = 0 && i = 0x8
+	Do nothing
+
+(Make sure the array index does not go below zero). 
+To erase the character
+from the screen, print out a space and a second backspace.
+
+*/
