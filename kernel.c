@@ -14,17 +14,20 @@ void main()
 }
 
 void printString(char* chars)
-{	int startVidMem = 0xb800;
+{	
+	/*
+	int startVidMem = 0xb800;
 	int vidMemOffset = 0x0;
 	int white = 0x7;
+	*/
 
-	while (*chars != 0x0) {
-		putInMemory(startVidMem, vidMemOffset, *chars);
-		++vidMemOffset;
-		putInMemory(startVidMem, vidMemOffset, white);
-		++vidMemOffset;
-		//advance letters pointer
-		++chars;
+	int i = 0;
+	while (chars[i] != 0x0) {
+		char al = chars[i];
+		char ah = 0xe;
+		int ax = ah * 256 + al;
+		interrupt(0x10, ax, 0, 0, 0);
+		++i;
 	}
 	/*
 	char al = *chars;
