@@ -70,8 +70,10 @@ I don't know how exactly to do the above other than literally trying it so thats
 char* readString(char* inputArray) // I'm not sure why it wants a pointer here, array?
 {
 	char* testing = "Input registered";
+	char* in = "who cares\0";
 
-	interrupt(0x16, 0, 0, 0, 0);
+	in = (char*) interrupt(0x16, 0, 0, 0, 0);
+	interrupt(0x10, 0xe * 256 + in, 0, 0, 0);
 	printString(testing);
 	return inputArray;
 }
