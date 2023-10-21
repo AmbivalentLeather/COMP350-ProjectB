@@ -3,16 +3,24 @@
 
 void printString(char*);
 void printChar(char*);
-char readString(char*);
+char* readString(char*);
 
 void main()
 {
-	char* letters = "Enter a string: \0";
+	char* letters = "Aunter a string: \0";
 	char input[80];
+	char* testing = "c\0";
+
+	printString(testing);
 
 	printString(letters);
-	readString(input);
+	printString(testing);
+
+	//readString(input);
+	printString(testing);
+
 	printString(input);
+	printString(testing);
 
 	while(1);
 }
@@ -59,30 +67,26 @@ If i = 0 && i = 0x8
 I don't know how exactly to do the above other than literally trying it so thats what I'll do
 */
 
-char readString(char* inputArray) // I'm not sure why it wants a pointer here, array?
+char* readString(char* inputArray) // I'm not sure why it wants a pointer here, array?
 {
+	int e;
 	char* c = "c";
 	printChar(c);	// This doesn't print.
 	int i = 0;
 	while (inputArray[i] != 0x0) {
-		printChar(c);
 	 	int AX = 0;
 		// I'm not really passing anything into interrupt...
 		interrupt(0x16, AX, 0, 0, 0);
 		int interruptValue = AX;
 
-		printChar(c);
 		if (interruptValue == 0x8 && inputArray[i] == 0)
 			;
 		if (interruptValue == 0x8 && inputArray[i] != 0)
 			--i;
 		if (interruptValue == 0xd)
 			break;
-		printChar(c);
 		inputArray[i] = interruptValue; 
-		interrupt(0x10, 0xe * 256 + interruptValue, 0, 0, 0);
 		++i;
-		printChar(c);
 	}
 		printChar(c);
 	inputArray[i] = 0xa;
