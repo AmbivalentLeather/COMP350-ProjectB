@@ -11,16 +11,16 @@ void main()
 	char input[80];
 	char* testing = "c\0";
 
-	printString(testing);
+	//printString(testing);
 
 	printString(letters);
-	printString(testing);
+	//printString(testing);
 
-	//readString(input);
-	printString(testing);
+	readString(input);
+	//printString(testing);
 
 	printString(input);
-	printString(testing);
+	//printString(testing);
 
 	while(1);
 }
@@ -69,34 +69,9 @@ I don't know how exactly to do the above other than literally trying it so thats
 
 char* readString(char* inputArray) // I'm not sure why it wants a pointer here, array?
 {
-	int e;
-	char* c = "c";
-	printChar(c);	// This doesn't print.
-	int i = 0;
-	while (inputArray[i] != 0x0) {
-	 	int AX = 0;
-		// I'm not really passing anything into interrupt...
-		interrupt(0x16, AX, 0, 0, 0);
-		int interruptValue = AX;
+	char* testing = "Input registered";
 
-		if (interruptValue == 0x8 && inputArray[i] == 0)
-			;
-		if (interruptValue == 0x8 && inputArray[i] != 0)
-			--i;
-		if (interruptValue == 0xd)
-			break;
-		inputArray[i] = interruptValue; 
-		++i;
-	}
-		printChar(c);
-	inputArray[i] = 0xa;
-	inputArray[i + 1] = 0x0;
-
-	/*
-	char* nextline = "\n";
-	printString(nextline);	// Go to the nextline 
-	nextline = "\0";
-	printString(nextline);	// Go to the nextline 
-	*/
+	interrupt(0x16, 0, 0, 0, 0);
+	printString(testing);
 	return inputArray;
 }
