@@ -9,18 +9,12 @@ void main()
 {
 	char* letters = "Aunter a string: \0";
 	char input[80];
-	char* testing = "c\0";
-
-	//printString(testing);
 
 	printString(letters);
-	//printString(testing);
 
 	readString(input);
-	//printString(testing);
 
 	printString(input);
-	//printString(testing);
 
 	while(1);
 }
@@ -69,11 +63,35 @@ I don't know how exactly to do the above other than literally trying it so thats
 
 char* readString(char* inputArray) // I'm not sure why it wants a pointer here, array?
 {
-	char* testing = "Input registered";
-	char* in = "who cares\0";
+	char* registered = " Input registered ";
+	char in = 0x0;
 
-	in = (char*) interrupt(0x16, 0, 0, 0, 0);
-	interrupt(0x10, 0xe * 256 + in, 0, 0, 0);
-	printString(testing);
+	int i = 0;
+	while (i != 79) {
+		in = (char) interrupt(0x16, 0, 0, 0, 0);
+		if (in == 0xd)
+			break;	// Break out of the loop if the user presses enter
+		if (i == 0 && in == 0x8)
+			;	// Don't print backspace if array index == 0
+		if (in == 0x8){
+			char space = ' ';
+			interrupt(0x10, 0xe * 256 + in, 0, 0, 0);
+			interrupt(0x10, 0xe * 256 + space, 0, 0, 0);
+			//interrupt(0x10, 0xe * 256 + in, 0, 0, 0);
+			--i;
+			;	// Print backspace character, decrement array index
+		}
+
+		inputArray[i] = in;
+		interrupt(0x10, 0xe * 256 + in, 0, 0, 0);
+//		printString(registered);
+		++i;
+	}
+	inputArray[i] = 0xa;
+	inputArray[i + 1] = 0x0;
+
+	interrupt(0x10, 0xe * 256 + 0xd, 0, 0, 0); // Print 0xd
+	interrupt(0x10, 0xe * 256 + 0xa, 0, 0, 0); // Print 0xa
+
 	return inputArray;
 }
