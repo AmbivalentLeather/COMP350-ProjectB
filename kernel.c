@@ -7,7 +7,7 @@ char* readString(char*);
 
 void main()
 {
-	char* letters = "Aunter a string: \0";
+	char* letters = "Enter a string: \0";
 	char input[80];
 
 	printString(letters);
