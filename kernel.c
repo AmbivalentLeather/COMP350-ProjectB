@@ -11,15 +11,17 @@ void main()
 	char* letters = "Enter a string: \0";
 	char input[80];
 
-//	printString(letters);
+	printString(letters);
 
-//	readString(input);
+	readString(input);
 
-//	printString(input);
+	printString(input);
+
 
 	char buffer[512];
 	readSector(buffer, 30);
 	printString(buffer);
+
 
 	while(1);
 }
