@@ -83,15 +83,23 @@ char* readString(char* inputArray) // I'm not sure why it wants a pointer here, 
 	return inputArray;
 }
 
-char* readSector(char* buffer, int sector){
-    int AH = 2; // this number tells BIOS to read a sector as opposed to write
-    int AL = 1; // numbers of sectors to read
-    char* BX = buffer; // address where the data should be stored to
-    int CH = 0; // track number
-    int CL = sector+1; // relative sector number
-    int DH = 0; // head number
-   // interrupt(0x13, AH, AL, BX, CH, CL, DH, 0x80);
-    interrupt(0x13, AH*256+AL, BX, CH*256+CL, DH*256+0x80); //Notes version  
+char* readSector(char* buffer, int sector)
+{
+	int AH = 2;	// this number tells BIOS to read a sector as opposed to write
+	int AL = 1;	// numbers of sectors to read
+	int AX = AH * 256 + AL;
 
-    return buffer;
+	char* BX = buffer; // address where the data should be stored to
+
+	int CH = 0;	// track number
+	int CL = sector + 1; // relative sector number
+	int CX = CH * 256 + CL;
+
+	int DH = 0;	// head number
+	int DX = DH * 256 + 0x80;
+
+	// interrupt(0x13, AX, BX, CX, DX);
+	interrupt(0x13, AX, BX, CX, DX);  
+
+	return buffer;
 }
