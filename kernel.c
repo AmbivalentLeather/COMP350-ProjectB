@@ -6,26 +6,24 @@ void printChar(char*);
 char* readString(char*);
 char* readSector(char*, int);
 void handleInterrupt21(int ax, int bx, int cx, int dx);
-void makeinterrupt();
 
 void main()
 {
 	char* letters = "Enter a string: \0";
 	char input[80];
 
+	makeInterrupt21();
+	interrupt(0x21, 0, 0, 0, 0);
+
 	printString(letters);
-
 	readString(input);
-
 	printString(input);
 
-
+	/*
 	char buffer[512];
 	readSector(buffer, 30);
 	printString(buffer);
-
-	makeInterrupt21();
-	interrupt(0x21, 0, 0, 0, 0);
+	*/
 
 	while(1);
 }
