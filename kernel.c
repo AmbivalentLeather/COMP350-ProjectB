@@ -4,17 +4,22 @@
 void printString(char*);
 void printChar(char*);
 char* readString(char*);
+char* readSector(char*, int);
 
 void main()
 {
 	char* letters = "Enter a string: \0";
 	char input[80];
 
-	printString(letters);
+//	printString(letters);
 
-	readString(input);
+//	readString(input);
 
-	printString(input);
+//	printString(input);
+
+	char buffer[512];
+	readSector(buffer, 30);
+	printString(buffer);
 
 	while(1);
 }
@@ -76,4 +81,17 @@ char* readString(char* inputArray) // I'm not sure why it wants a pointer here, 
 	interrupt(0x10, 0xe * 256 + 0xa, 0, 0, 0); // Print line feed character
 
 	return inputArray;
+}
+
+char* readSector(char* buffer, int sector){
+    int AH = 2; // this number tells BIOS to read a sector as opposed to write
+    int AL = 1; // numbers of sectors to read
+    char* BX = buffer; // address where the data should be stored to
+    int CH = 0; // track number
+    int CL = sector+1; // relative sector number
+    int DH = 0; // head number
+   // interrupt(0x13, AH, AL, BX, CH, CL, DH, 0x80);
+    interrupt(0x13, AH*256+AL, BX, CH*256+CL, DH*256+0x80); //Notes version  
+
+    return buffer;
 }
