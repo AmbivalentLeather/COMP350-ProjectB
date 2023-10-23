@@ -3,13 +3,30 @@
 // kernel.c
 
 void printString(char*);
+<<<<<<< Updated upstream
+=======
+void printChar(char*);
+char* readString(char*);
+char* readSector(char*, int);
+>>>>>>> Stashed changes
 
 void main()
 {
 	char* letters = "Hello World\0";
 
-	printString(letters);
+//	printString(letters);
 
+<<<<<<< Updated upstream
+=======
+//	readString(input);
+
+//	printString(input);
+
+	char buffer[512];
+	readSector(buffer, 30);
+	printString(buffer);
+
+>>>>>>> Stashed changes
 	while(1);
 }
 
@@ -35,4 +52,17 @@ void printString(char* chars)
 	int ax = ah * 256 + al;
 	interrupt(0x10, ax, 0, 0, 0);
 	*/
+}
+
+char* readSector(char* buffer, int sector){
+    int AH = 2; // this number tells BIOS to read a sector as opposed to write
+    int AL = 1; // numbers of sectors to read
+    char* BX = buffer; // address where the data should be stored to
+    int CH = 0; // track number
+    int CL = sector+1; // relative sector number
+    int DH = 0; // head number
+//    interrupt(0x13, AH, AL, BX, CH, CL, DH, 0x80);
+    interrupt(0x13, AH*256+AL, BX, CH*256+CL, DH*256+0x80); //Notes version  
+
+    return buffer;
 }
