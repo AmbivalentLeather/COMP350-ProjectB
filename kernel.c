@@ -3,12 +3,10 @@
 // kernel.c
 
 void printString(char*);
-<<<<<<< Updated upstream
-=======
+
 void printChar(char*);
 char* readString(char*);
 char* readSector(char*, int);
->>>>>>> Stashed changes
 
 void main()
 {
@@ -16,8 +14,6 @@ void main()
 
 //	printString(letters);
 
-<<<<<<< Updated upstream
-=======
 //	readString(input);
 
 //	printString(input);
@@ -26,7 +22,6 @@ void main()
 	readSector(buffer, 30);
 	printString(buffer);
 
->>>>>>> Stashed changes
 	while(1);
 }
 
