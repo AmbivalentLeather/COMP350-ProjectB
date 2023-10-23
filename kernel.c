@@ -5,6 +5,8 @@ void printString(char*);
 void printChar(char*);
 char* readString(char*);
 char* readSector(char*, int);
+void handleInterrupt21(int ax, int bx, int cx, int dx);
+void makeinterrupt();
 
 void main()
 {
@@ -22,6 +24,8 @@ void main()
 	readSector(buffer, 30);
 	printString(buffer);
 
+	makeInterrupt21();
+	interrupt(0x21, 0, 0, 0, 0);
 
 	while(1);
 }
@@ -104,4 +108,9 @@ char* readSector(char* buffer, int sector)
 	interrupt(0x13, AX, BX, CX, DX);  
 
 	return buffer;
+}
+
+void handleInterrupt21(int ax, int bx, int cx, int dx)
+{
+	printString("Hello, string");
 }
