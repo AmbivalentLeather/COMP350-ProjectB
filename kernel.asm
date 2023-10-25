@@ -1,3 +1,5 @@
+;Nicholas Young & Chase Simao
+
 ;kernel.asm
 ;Margaret Black, 2007
 
