@@ -5,14 +5,15 @@ void printString(char*);
 void printChar(char*);
 char* readString(char*);
 char* readSector(char*, int);
-void handleInterrupt21(int ax, int bx, int cx, int dx);
+void handleInterrupt21(int ax, char* bx, int cx, int dx);
 
 void main()
 {
-	char* letters = "Enter a string: \0";
-	char input[80];
+//	char* letters = "Enter a string: \0";
+//	char input[80];
 	
 	
+	char line[80];
 	makeInterrupt21();
 	interrupt(0x21, 1, line, 0, 0);
 	interrupt(0x21, 0, line, 0, 0);	
@@ -112,7 +113,20 @@ char* readSector(char* buffer, int sector)
 	return buffer;
 }
 
-void handleInterrupt21(int ax, char* bx, int cx, int dx) {
+void handleInterrupt21(int ax, char* bx, int cx, int dx)
+{
+	switch(ax)
+	{
+		case 0: printString(bx);
+			      break;
+		case 1: readString(bx);
+			      break;
+		case 2: readSector(bx, cx);
+			      break;
+		default: printString("Error AX is invalid");
+			 break;
+	}
+	/*
 	if (ax == 0) {
 		printString(bx);
 	}
@@ -125,6 +139,7 @@ void handleInterrupt21(int ax, char* bx, int cx, int dx) {
 	if (ax > 2) {
 		printf("Error AX is 3 or larger");
 	}
-//	printString("Hello, string");
+	printString("Hello, string");
+	*/
 	
 }
