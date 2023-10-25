@@ -9,22 +9,21 @@ void handleInterrupt21(int ax, char* bx, int cx, int dx);
 
 void main()
 {
-//	char* letters = "Enter a string: \0";
-//	char input[80];
-	
-	
 	char line[80];
 	makeInterrupt21();
 	interrupt(0x21, 1, line, 0, 0);
 	interrupt(0x21, 0, line, 0, 0);	
 
-//	interrupt(0x21, 0, 0, 0, 0);
+	/* Old code for testing
+	char* letters = "Enter a string: \0";
+	char input[80];
+	
+	interrupt(0x21, 0, 0, 0, 0);
 
-//	printString(letters);
-//	readString(input);
-//	printString(input);
+	printString(letters);
+	readString(input);
+	printString(input);
 
-	/*
 	char buffer[512];
 	readSector(buffer, 30);
 	printString(buffer);
@@ -53,7 +52,7 @@ void printChar(char* c)
 	interrupt(0x10, ax, 0, 0, 0);
 }
 
-char* readString(char* inputArray) // I'm not sure why it wants a pointer here, array?
+char* readString(char* inputArray)
 {
 	char keyboardInput = 0x0;
 
@@ -126,20 +125,4 @@ void handleInterrupt21(int ax, char* bx, int cx, int dx)
 		default: printString("Error AX is invalid");
 			 break;
 	}
-	/*
-	if (ax == 0) {
-		printString(bx);
-	}
-	if (ax == 1) {
-		readString(bx);
-	}
-	if (ax == 2) {
-		readSector(bx, cx);
-	}
-	if (ax > 2) {
-		printf("Error AX is 3 or larger");
-	}
-	printString("Hello, string");
-	*/
-	
 }
